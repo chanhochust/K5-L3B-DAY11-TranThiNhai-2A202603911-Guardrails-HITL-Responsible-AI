@@ -1,5 +1,32 @@
 # Day 11 — Controlled Agent Security (2026)
 
+## Bài nộp
+
+| | |
+|---|---|
+| **Học viên** | Trần Thị Nhài |
+| **MSSV** | 2A202603911 |
+| **Lớp** | L3B |
+| **Blue** | OpenRouter `liquid/lfm-3-1.7b:free` |
+| **Red / Red Advance** | Gemini `gemini-3.5-flash` |
+
+**Kết quả** (`outputs/`, sinh bằng lệnh — không sửa tay):
+
+- **Blue** (`results.json`): safe bị chặn 0/7 · attack bị chặn 7/8 · rate limit 10 qua / 5 chặn (15 gửi) · edge cases 5
+- **Red** (`attack_results.json`): Red leak 5/5 · Red Advance leak 0/5 (bị NeMo input rail chặn) → chọn bonus **B1**
+- `scripts/grade.py`: `technical_failure: false` · `pytest tests/smoke tests/public`: 49 passed
+
+**Chạy lại** (từ gốc repo, sau khi `pip install -r requirements.txt` và điền `.env` theo `.env.example`):
+
+```bash
+python src/main.py --part 2   # CP2 — guardrails (chỉ in terminal)
+python src/main.py --part 3   # CP3 — Blue pipeline → outputs/results.json, audit_log.json, metrics.json
+python src/main.py --part 4   # CP4 — tấn công Red + Red Advance → outputs/attack_results.json
+python scripts/grade.py --submission-dir . --out outputs/grade_report.json   # CP5
+```
+
+---
+
 > 👤 **Hình thức:** bài tập **cá nhân** (1 người / 1 MSSV).  
 > 🎯 **Mục tiêu:** đóng vai **Blue Team** để học cách xây Guardrails phòng thủ, rồi đóng vai **Red Team** để tấn công agent **Red** hoặc **Red Advance**.  
 > ✅ Làm theo **Checkpoint 1 → 5** trong [`CHECKPOINTS.md`](CHECKPOINTS.md) · nộp theo [`SUBMISSION.md`](SUBMISSION.md).
